@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Irrigation Prospector</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Literata:wght@400;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap');
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream: #f5f0e8; --paper: #faf7f2; --ink: #1a1612; --ink2: #3d3530;
+    --ink3: #7a6f65; --ink4: #b0a89e; --green: #2d5a27; --green-light: #e8f0e6;
+    --green-mid: #4a8c42; --rust: #8b3a1e; --rust-light: #f5ede9; --border: #d8d0c4;
+  }
+  body { background: var(--cream); color: var(--ink); font-family: 'Literata', Georgia, serif; min-height: 100vh; }
+  .app { max-width: 1200px; margin: 0 auto; padding: 40px 24px 80px; }
+  .header { border-bottom: 2px solid var(--ink); padding-bottom: 20px; margin-bottom: 32px; display: flex; align-items: flex-end; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+  .masthead h1 { font-size: 32px; font-weight: 700; letter-spacing: -1px; }
+  .masthead p { font-size: 13px; color: var(--ink3); font-family: 'IBM Plex Mono', monospace; margin-top: 6px; }
+  .badge { background: var(--green); color: #fff; font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 6px 14px; border-radius: 2px; }
+  .search-form { background: var(--paper); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-bottom: 24px; }
+  .form-title { font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: var(--ink3); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
+  .form-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: end; margin-bottom: 16px; }
+  .field label { display: block; font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+  .field select, .field input { width: 100%; background: white; border: 1px solid var(--border); border-radius: 3px; padding: 10px 14px; font-family: 'Literata', serif; font-size: 14px; color: var(--ink); outline: none; }
+  .field select:focus, .field input:focus { border-color: var(--green); }
+  .type-pills { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 16px; border-top: 1px dashed var(--border); }
+  .type-pill { padding: 5px 16px; border-radius: 20px; border: 1px solid var(--border); background: white; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink3); cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.15s; }
+  .type-pill.active { background: var(--green); color: white; border-color: var(--green); }
+  .btn { border: none; border-radius: 3px; padding: 10px 28px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; letter-spacing: 0.3px; }
+  .btn-green { background: var(--green); color: white; }
+  .btn-green:hover { background: var(--green-mid); }
+  .btn-green:disabled { background: var(--ink4); cursor: not-allowed; }
+  .btn-outline { background: white; border: 1px solid var(--border); color: var(--ink2); }
+  .btn-outline:hover { border-color: var(--green); color: var(--green); }
+  .results-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
+  .results-info { font-size: 13px; color: var(--ink3); font-family: 'IBM Plex Mono', monospace; }
+  .results-info strong { color: var(--green); }
+  .error-box { background: var(--rust-light); border: 1px solid #d4956a; border-left: 4px solid var(--rust); border-radius: 4px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: var(--rust); font-family: 'IBM Plex Mono', monospace; }
+  .loading { text-align: center; padding: 60px 0; }
+  .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 16px; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .loading p { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--ink3); }
+  .empty { text-align: center; padding: 80px 0; color: var(--ink3); border: 1px dashed var(--border); border-radius: 4px; }
+  .empty-icon { font-size: 40px; margin-bottom: 16px; opacity: 0.4; }
+  .empty h3 { font-size: 18px; font-weight: 600; color: var(--ink2); margin-bottom: 8px; }
+  .empty p { font-size: 14px; line-height: 1.6; }
+  .table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: 4px; background: white; }
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  thead { background: var(--ink); color: var(--cream); }
+  thead th { padding: 12px 14px; text-align: left; font-family: 'IBM Plex Mono', monospace; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.8px; white-space: nowrap; }
+  tbody tr { border-bottom: 1px solid var(--border); transition: background 0.1s; }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--paper); }
+  tbody td { padding: 10px 14px; color: var(--ink2); vertical-align: top; }
+  .mono { font-family: 'IBM Plex Mono', monospace; font-size: 11px; }
+  a { color: var(--green); font-size: 11px; font-family: 'IBM Plex Mono', monospace; text-decoration: none; }
+  a:hover { text-decoration: underline; }
+  .inline-input { width: 100%; min-width: 100px; background: transparent; border: 1px dashed transparent; border-radius: 3px; padding: 3px 6px; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink2); outline: none; transition: border-color 0.15s; }
+  .inline-input:focus { border-color: var(--border); background: var(--paper); }
+  .inline-input::placeholder { color: var(--ink4); font-style: italic; }
+  .notes-input { width: 100%; min-width: 140px; background: transparent; border: 1px dashed transparent; border-radius: 3px; padding: 4px 6px; font-family: 'Literata', serif; font-size: 12px; color: var(--ink2); resize: none; outline: none; min-height: 38px; transition: border-color 0.15s; }
+  .notes-input:focus { border-color: var(--border); background: var(--paper); }
+  .notes-input::placeholder { color: var(--ink4); font-style: italic; }
+  .tag-type { display: inline-block; padding: 2px 8px; border-radius: 2px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; background: var(--green-light); color: var(--green); }
+  @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="header">
+    <div class="masthead">
+      <h1>🌿 Irrigation Prospector</h1>
+      <p>Find irrigation, landscape &amp; hardscape businesses by state</p>
+    </div>
+    <div class="badge">Google Places Powered</div>
+  </div>
+  <div class="search-form">
+    <div class="form-title">// Search Parameters</div>
+    <div class="form-row">
+      <div class="field">
+        <label>State *</label>
+        <select id="stateSelect">
+          <option value="">— Select State —</option>
+          <option>Alabama</option><option>Alaska</option><option>Arizona</option>
+          <option>Arkansas</option><option>California</option><option>Colorado</option>
+          <option>Connecticut</option><option>Delaware</option><option>Florida</option>
+          <option>Georgia</option><option>Hawaii</option><option>Idaho</option>
+          <option>Illinois</option><option>Indiana</option><option>Iowa</option>
+          <option>Kansas</option><option>Kentucky</option><option>Louisiana</option>
+          <option>Maine</option><option>Maryland</option><option>Massachusetts</option>
+          <option>Michigan</option><option>Minnesota</option><option>Mississippi</option>
+          <option>Missouri</option><option>Montana</option><option>Nebraska</option>
+          <option>Nevada</option><option>New Hampshire</option><option>New Jersey</option>
+          <option>New Mexico</option><option>New York</option><option>North Carolina</option>
+          <option>North Dakota</option><option>Ohio</option><option>Oklahoma</option>
+          <option>Oregon</option><option>Pennsylvania</option><option>Rhode Island</option>
+          <option>South Carolina</option><option>South Dakota</option><option>Tennessee</option>
+          <option>Texas</option><option>Utah</option><option>Vermont</option>
+          <option>Virginia</option><option>Washington</option><option>West Virginia</option>
+          <option>Wisconsin</option><option>Wyoming</option>
+        </select>
+      </div>
+      <div class="field">
+        <label>City (optional)</label>
+        <input type="text" id="cityInput" placeholder="e.g. Austin" />
+      </div>
+      <button class="btn btn-green" id="searchBtn" onclick="doSearch()">Search</button>
+    </div>
+    <div class="type-pills">
+      <span class="type-pill active" data-query="irrigation company">Irrigation</span>
+      <span class="type-pill" data-query="landscaping company">Landscape</span>
+      <span class="type-pill" data-query="hardscape contractor">Hardscape</span>
+      <span class="type-pill" data-query="lawn care service">Lawn Care</span>
+    </div>
+  </div>
+  <div id="errorBox" class="error-box" style="display:none;"></div>
+  <div id="loadingBox" class="loading" style="display:none;">
+    <div class="spinner"></div>
+    <p>Fetching businesses from Google Places...</p>
+  </div>
+  <div id="resultsSection" style="display:none;">
+    <div class="results-bar">
+      <div class="results-info">Found <strong id="resultCount">0</strong> businesses</div>
+      <button class="btn btn-outline" onclick="exportCSV()">↓ Export CSV</button>
+    </div>
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Company Name</th><th>Type</th><th>First Name</th><th>Last Name</th>
+            <th>Phone</th><th>Email</th><th>Website</th><th>Contact Form</th>
+            <th>Facebook</th><th>Location Notes</th><th>Outreach Notes</th>
+          </tr>
+        </thead>
+        <tbody id="resultsBody"></tbody>
+      </table>
+    </div>
+  </div>
+  <div id="emptyState" class="empty" style="display:none;">
+    <div class="empty-icon">🔍</div>
+    <h3>No results found</h3>
+    <p>Try a different state, city, or select more business types.</p>
+  </div>
+  <div id="initialState" class="empty">
+    <div class="empty-icon">🌱</div>
+    <h3>Ready to prospect</h3>
+    <p>Pick a state, choose your business types, and hit Search.</p>
+  </div>
+</div>
+<script>
+  document.querySelectorAll('.type-pill').forEach(pill => {
+    pill.addEventListener('click', () => pill.classList.toggle('active'));
+  });
+  let leads = [];
+  async function doSearch() {
+    const state = document.getElementById('stateSelect').value;
+    const city = document.getElementById('cityInput').value.trim();
+    const activeTypes = [...document.querySelectorAll('.type-pill.active')].map(p => p.dataset.query);
+    if (!state) { showError('Please select a state.'); return; }
+    if (activeTypes.length === 0) { showError('Select at least one business type.'); return; }
+    hideAll();
+    document.getElementById('loadingBox').style.display = 'block';
+    document.getElementById('searchBtn').disabled = true;
+    const location = city ? `${city}, ${state}` : state;
+    const allResults = [];
+    const seen = new Set();
+    try {
+      for (const type of activeTypes) {
+        const query = `${type} ${location}`;
+        const resp = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
+        if (!resp.ok) throw new Error(`Server error: ${resp.status}`);
+        const data = await resp.json();
+        if (data.status === 'REQUEST_DENIED') throw new Error('API key issue: ' + (data.error_message || 'Check Google Cloud Console'));
+        if (data.error) throw new Error(data.error);
+        for (const place of (data.results || [])) {
+          if (seen.has(place.place_id)) continue;
+          seen.add(place.place_id);
+          const detResp = await fetch(`/api/details?place_id=${place.place_id}`);
+          const detData = await detResp.json();
+          const d = detData.result || {};
+          const website = d.website || '';
+          allResults.push({
+            id: place.place_id, companyName: place.name || '', type: type,
+            phone: d.formatted_phone_number || '', website: website,
+            contactForm: website ? website.replace(/\/$/, '') + '/contact' : '',
+            address: d.formatted_address || place.formatted_address || '',
+            locationNotes: location, email: '', facebook: '', firstName: '', lastName: '', notes: ''
+          });
+        }
+      }
+      leads = allResults;
+      renderResults();
+    } catch(e) {
+      showError(e.message || 'Something went wrong.');
+    } finally {
+      document.getElementById('loadingBox').style.display = 'none';
+      document.getElementById('searchBtn').disabled = false;
+    }
+  }
+  function renderResults() {
+    hideAll();
+    if (leads.length === 0) { document.getElementById('emptyState').style.display = 'block'; return; }
+    document.getElementById('resultCount').textContent = leads.length;
+    document.getElementById('resultsSection').style.display = 'block';
+    const tbody = document.getElementById('resultsBody');
+    tbody.innerHTML = '';
+    leads.forEach((lead, i) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td style="font-weight:600;min-width:160px">${esc(lead.companyName)}</td>
+        <td><span class="tag-type">${typeLabel(lead.type)}</span></td>
+        <td><input class="inline-input" placeholder="First" value="${esc(lead.firstName)}" oninput="leads[${i}].firstName=this.value"/></td>
+        <td><input class="inline-input" placeholder="Last" value="${esc(lead.lastName)}" oninput="leads[${i}].lastName=this.value"/></td>
+        <td class="mono">${esc(lead.phone)||'<span style="color:var(--ink4)">—</span>'}</td>
+        <td><input class="inline-input" placeholder="email@..." style="min-width:140px" value="${esc(lead.email)}" oninput="leads[${i}].email=this.value"/></td>
+        <td>${lead.website?`<a href="${esc(lead.website)}" target="_blank">🔗 ${esc(hostname(lead.website))}</a>`:'<span style="color:var(--ink4)">—</span>'}</td>
+        <td><input class="inline-input" placeholder="/contact URL" style="min-width:150px" value="${esc(lead.contactForm)}" oninput="leads[${i}].contactForm=this.value"/></td>
+        <td><input class="inline-input" placeholder="facebook.com/..." style="min-width:140px" value="${esc(lead.facebook)}" oninput="leads[${i}].facebook=this.value"/></td>
+        <td class="mono" style="font-size:11px;color:var(--ink3);min-width:140px">${esc(lead.address)}</td>
+        <td><textarea class="notes-input" placeholder="Add notes..." oninput="leads[${i}].notes=this.value" rows="2">${esc(lead.notes)}</textarea></td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+  function exportCSV() {
+    const headers = ['Company Name','First Name','Last Name','Phone','Email','Website','Contact Form','Facebook','Address','Location Notes','Type','Outreach Notes'];
+    const rows = leads.map(l => [l.companyName,l.firstName,l.lastName,l.phone,l.email,l.website,l.contactForm,l.facebook,l.address,l.locationNotes,l.type,l.notes].map(v => `"${(v||'').replace(/"/g,'""')}"`));
+    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+    const blob = new Blob([csv], {type:'text/csv'});
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = `irrigation-leads-${Date.now()}.csv`;
+    a.click();
+  }
+  function showError(msg) { hideAll(); const b = document.getElementById('errorBox'); b.textContent = '⚠ ' + msg; b.style.display = 'block'; }
+  function hideAll() { ['errorBox','loadingBox','resultsSection','emptyState','initialState'].forEach(id => document.getElementById(id).style.display = 'none'); }
+  function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+  function hostname(url) { try { return new URL(url).hostname.replace('www.',''); } catch(e) { return url; } }
+  function typeLabel(q) { return {'irrigation company':'Irrigation','landscaping company':'Landscape','hardscape contractor':'Hardscape','lawn care service':'Lawn Care'}[q]||q; }
+</script>
+</body>
+</html>
