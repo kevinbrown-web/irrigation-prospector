@@ -20,27 +20,33 @@
   .badge { background: var(--green); color: #fff; font-family: 'IBM Plex Mono', monospace; font-size: 11px; padding: 6px 14px; border-radius: 2px; }
   .search-form { background: var(--paper); border: 1px solid var(--border); border-radius: 4px; padding: 24px 28px; margin-bottom: 24px; }
   .form-title { font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: var(--ink3); text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 20px; padding-bottom: 12px; border-bottom: 1px solid var(--border); }
-  .form-row { display: grid; grid-template-columns: 1fr 1fr auto; gap: 16px; align-items: end; margin-bottom: 16px; }
+  .form-row { display: grid; grid-template-columns: 1fr auto; gap: 16px; align-items: end; margin-bottom: 16px; }
   .field label { display: block; font-size: 11px; font-family: 'IBM Plex Mono', monospace; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
   .field select, .field input { width: 100%; background: white; border: 1px solid var(--border); border-radius: 3px; padding: 10px 14px; font-family: 'Literata', serif; font-size: 14px; color: var(--ink); outline: none; }
   .field select:focus, .field input:focus { border-color: var(--green); }
-  .type-pills { display: flex; gap: 8px; flex-wrap: wrap; padding-top: 16px; border-top: 1px dashed var(--border); }
-  .type-pill { padding: 5px 16px; border-radius: 20px; border: 1px solid var(--border); background: white; font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink3); cursor: pointer; text-transform: uppercase; letter-spacing: 0.5px; transition: all 0.15s; }
-  .type-pill.active { background: var(--green); color: white; border-color: var(--green); }
-  .btn { border: none; border-radius: 3px; padding: 10px 28px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; letter-spacing: 0.3px; }
+  .btn { border: none; border-radius: 3px; padding: 10px 28px; font-family: 'IBM Plex Mono', monospace; font-size: 13px; font-weight: 500; cursor: pointer; transition: all 0.15s; letter-spacing: 0.3px; white-space: nowrap; }
   .btn-green { background: var(--green); color: white; }
   .btn-green:hover { background: var(--green-mid); }
   .btn-green:disabled { background: var(--ink4); cursor: not-allowed; }
   .btn-outline { background: white; border: 1px solid var(--border); color: var(--ink2); }
   .btn-outline:hover { border-color: var(--green); color: var(--green); }
+  .btn-red { background: var(--rust); color: white; }
+  .btn-red:hover { background: #a04525; }
+
+  /* Progress area */
+  .progress-wrap { background: var(--paper); border: 1px solid var(--border); border-radius: 4px; padding: 20px 24px; margin-bottom: 24px; }
+  .progress-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 14px; }
+  .progress-label { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--ink2); }
+  .progress-count { font-family: 'IBM Plex Mono', monospace; font-size: 12px; color: var(--green); font-weight: 500; }
+  .progress-bar-track { background: var(--border); border-radius: 2px; height: 6px; overflow: hidden; margin-bottom: 10px; }
+  .progress-bar-fill { background: var(--green); height: 100%; border-radius: 2px; transition: width 0.3s ease; width: 0%; }
+  .progress-status { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink3); }
+  .progress-live { font-family: 'IBM Plex Mono', monospace; font-size: 11px; color: var(--ink3); margin-top: 6px; }
+
   .results-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 16px; flex-wrap: wrap; gap: 12px; }
   .results-info { font-size: 13px; color: var(--ink3); font-family: 'IBM Plex Mono', monospace; }
   .results-info strong { color: var(--green); }
   .error-box { background: var(--rust-light); border: 1px solid #d4956a; border-left: 4px solid var(--rust); border-radius: 4px; padding: 14px 18px; margin-bottom: 20px; font-size: 13px; color: var(--rust); font-family: 'IBM Plex Mono', monospace; }
-  .loading { text-align: center; padding: 60px 0; }
-  .spinner { width: 32px; height: 32px; border: 3px solid var(--border); border-top-color: var(--green); border-radius: 50%; animation: spin 0.7s linear infinite; margin: 0 auto 16px; }
-  @keyframes spin { to { transform: rotate(360deg); } }
-  .loading p { font-family: 'IBM Plex Mono', monospace; font-size: 13px; color: var(--ink3); }
   .empty { text-align: center; padding: 80px 0; color: var(--ink3); border: 1px dashed var(--border); border-radius: 4px; }
   .empty-icon { font-size: 40px; margin-bottom: 16px; opacity: 0.4; }
   .empty h3 { font-size: 18px; font-weight: 600; color: var(--ink2); margin-bottom: 8px; }
@@ -63,6 +69,7 @@
   .notes-input:focus { border-color: var(--border); background: var(--paper); }
   .notes-input::placeholder { color: var(--ink4); font-style: italic; }
   .tag-type { display: inline-block; padding: 2px 8px; border-radius: 2px; font-family: 'IBM Plex Mono', monospace; font-size: 10px; text-transform: uppercase; letter-spacing: 0.5px; background: var(--green-light); color: var(--green); }
+  .info-box { background: var(--green-light); border: 1px solid #b8d4b4; border-left: 4px solid var(--green); border-radius: 4px; padding: 12px 16px; margin-bottom: 20px; font-size: 12px; color: var(--green); font-family: 'IBM Plex Mono', monospace; line-height: 1.6; }
   @media (max-width: 600px) { .form-row { grid-template-columns: 1fr; } }
 </style>
 </head>
@@ -71,15 +78,16 @@
   <div class="header">
     <div class="masthead">
       <h1>🌿 Irrigation Prospector</h1>
-      <p>Find irrigation, landscape &amp; hardscape businesses by state</p>
+      <p>Full-state scan — irrigation companies by state</p>
     </div>
     <div class="badge">Google Places Powered</div>
   </div>
+
   <div class="search-form">
-    <div class="form-title">// Search Parameters</div>
+    <div class="form-title">// Scan Parameters</div>
     <div class="form-row">
       <div class="field">
-        <label>State *</label>
+        <label>State — Full Scan *</label>
         <select id="stateSelect">
           <option value="">— Select State —</option>
           <option>Alabama</option><option>Alaska</option><option>Arizona</option>
@@ -101,143 +109,275 @@
           <option>Wisconsin</option><option>Wyoming</option>
         </select>
       </div>
-      <div class="field">
-        <label>City (optional)</label>
-        <input type="text" id="cityInput" placeholder="e.g. Austin" />
-      </div>
-      <button class="btn btn-green" id="searchBtn" onclick="doSearch()">Search</button>
-    </div>
-    <div class="type-pills">
-      <span class="type-pill active" data-query="irrigation company">Irrigation</span>
-      <span class="type-pill" data-query="landscaping company">Landscape</span>
-      <span class="type-pill" data-query="hardscape contractor">Hardscape</span>
-      <span class="type-pill" data-query="lawn care service">Lawn Care</span>
+      <button class="btn btn-green" id="searchBtn" onclick="startStateScan()">Run Full State Scan</button>
     </div>
   </div>
+
   <div id="errorBox" class="error-box" style="display:none;"></div>
-  <div id="loadingBox" class="loading" style="display:none;">
-    <div class="spinner"></div>
-    <p>Fetching businesses from Google Places...</p>
+
+  <div id="progressWrap" class="progress-wrap" style="display:none;">
+    <div class="progress-header">
+      <span class="progress-label" id="progressLabel">Scanning state...</span>
+      <span class="progress-count" id="progressCount">0 leads found</span>
+    </div>
+    <div class="progress-bar-track">
+      <div class="progress-bar-fill" id="progressFill"></div>
+    </div>
+    <div class="progress-status" id="progressStatus">Preparing grid...</div>
+    <div class="progress-live" id="progressLive"></div>
+    <div style="margin-top:14px;">
+      <button class="btn btn-red" id="cancelBtn" onclick="cancelScan()">✕ Cancel Scan</button>
+    </div>
   </div>
+
   <div id="resultsSection" style="display:none;">
     <div class="results-bar">
-      <div class="results-info">Found <strong id="resultCount">0</strong> businesses</div>
+      <div class="results-info">Found <strong id="resultCount">0</strong> irrigation companies in <strong id="resultState"></strong></div>
       <button class="btn btn-outline" onclick="exportCSV()">↓ Export CSV</button>
     </div>
     <div class="table-wrap">
       <table>
         <thead>
           <tr>
-            <th>Company Name</th><th>Type</th><th>First Name</th><th>Last Name</th>
+            <th>Company Name</th><th>First Name</th><th>Last Name</th>
             <th>Phone</th><th>Email</th><th>Website</th><th>Contact Form</th>
-            <th>Facebook</th><th>Location Notes</th><th>Outreach Notes</th>
+            <th>Facebook</th><th>Address</th><th>Outreach Notes</th>
           </tr>
         </thead>
         <tbody id="resultsBody"></tbody>
       </table>
     </div>
   </div>
+
   <div id="emptyState" class="empty" style="display:none;">
     <div class="empty-icon">🔍</div>
     <h3>No results found</h3>
-    <p>Try a different state, city, or select more business types.</p>
+    <p>Try a different state.</p>
   </div>
+
   <div id="initialState" class="empty">
     <div class="empty-icon">🌱</div>
-    <h3>Ready to prospect</h3>
-    <p>Pick a state, choose your business types, and hit Search.</p>
+    <h3>Ready to scan</h3>
+    <p>Pick a state and hit Run Full State Scan.<br/>The tool will automatically cover the entire state and deduplicate results.</p>
   </div>
 </div>
+
 <script>
-  document.querySelectorAll('.type-pill').forEach(pill => {
-    pill.addEventListener('click', () => pill.classList.toggle('active'));
-  });
-  let leads = [];
-  async function doSearch() {
-    const state = document.getElementById('stateSelect').value;
-    const city = document.getElementById('cityInput').value.trim();
-    const activeTypes = [...document.querySelectorAll('.type-pill.active')].map(p => p.dataset.query);
-    if (!state) { showError('Please select a state.'); return; }
-    if (activeTypes.length === 0) { showError('Select at least one business type.'); return; }
-    hideAll();
-    document.getElementById('loadingBox').style.display = 'block';
-    document.getElementById('searchBtn').disabled = true;
-    const location = city ? `${city}, ${state}` : state;
-    const allResults = [];
-    const seen = new Set();
+// ─── State grid data: [centerLat, centerLng, latSpan, lngSpan, gridRows, gridCols]
+// gridRows x gridCols = total search points. Bigger states get denser grids.
+const STATE_GRIDS = {
+  "Alabama":        [32.8,  -86.8,  4.0,  3.2,  4, 3],
+  "Alaska":         [64.2, -153.0, 14.0, 30.0,  4, 5],
+  "Arizona":        [34.3, -111.7,  6.5,  7.0,  4, 4],
+  "Arkansas":       [34.8,  -92.4,  3.5,  4.0,  3, 3],
+  "California":     [37.2, -119.5,  9.5,  5.5,  5, 4],
+  "Colorado":       [39.0, -105.5,  4.0,  7.0,  3, 4],
+  "Connecticut":    [41.6,  -72.7,  1.2,  2.0,  2, 3],
+  "Delaware":       [39.0,  -75.5,  1.2,  0.7,  2, 2],
+  "Florida":        [28.6,  -82.5,  5.5,  5.0,  4, 4],
+  "Georgia":        [32.7,  -83.4,  4.5,  3.5,  4, 3],
+  "Hawaii":         [20.5, -157.0,  2.5,  6.0,  2, 4],
+  "Idaho":          [44.5, -114.5,  7.0,  5.0,  4, 3],
+  "Illinois":       [40.0,  -89.2,  6.0,  3.0,  4, 3],
+  "Indiana":        [39.9,  -86.3,  4.0,  2.5,  3, 3],
+  "Iowa":           [42.0,  -93.5,  3.5,  5.0,  3, 4],
+  "Kansas":         [38.5,  -98.4,  3.5,  8.0,  3, 4],
+  "Kentucky":       [37.5,  -85.3,  3.0,  7.0,  2, 4],
+  "Louisiana":      [31.1,  -92.0,  3.5,  5.0,  3, 3],
+  "Maine":          [45.4,  -69.2,  4.5,  3.5,  3, 3],
+  "Maryland":       [39.0,  -77.0,  1.5,  3.5,  2, 3],
+  "Massachusetts":  [42.2,  -71.8,  1.5,  3.0,  2, 3],
+  "Michigan":       [44.3,  -85.5,  7.0,  4.5,  4, 3],
+  "Minnesota":      [46.4,  -94.3,  6.5,  6.0,  4, 4],
+  "Mississippi":    [32.7,  -89.7,  4.5,  2.5,  4, 2],
+  "Missouri":       [38.4,  -92.5,  4.0,  6.0,  3, 4],
+  "Montana":        [47.0, -109.5,  4.5, 12.0,  3, 5],
+  "Nebraska":       [41.5,  -99.9,  3.0,  8.0,  2, 4],
+  "Nevada":         [39.5, -116.8,  7.0,  6.0,  4, 3],
+  "New Hampshire":  [43.7,  -71.6,  3.0,  1.5,  3, 2],
+  "New Jersey":     [40.1,  -74.5,  2.5,  1.5,  3, 2],
+  "New Mexico":     [34.5, -106.2,  6.5,  7.0,  4, 4],
+  "New York":       [42.9,  -75.5,  4.5,  6.0,  3, 4],
+  "North Carolina": [35.5,  -79.4,  3.0,  8.0,  2, 4],
+  "North Dakota":   [47.5, -100.3,  3.0,  8.0,  2, 4],
+  "Ohio":           [40.4,  -82.7,  3.5,  3.5,  3, 3],
+  "Oklahoma":       [35.5,  -97.5,  3.0,  8.0,  2, 4],
+  "Oregon":         [44.0, -120.5,  5.5,  7.5,  3, 4],
+  "Pennsylvania":   [40.9,  -77.8,  2.5,  5.5,  2, 4],
+  "Rhode Island":   [41.7,  -71.6,  0.8,  0.8,  2, 2],
+  "South Carolina": [33.8,  -80.9,  2.5,  4.0,  2, 3],
+  "South Dakota":   [44.4, -100.2,  4.0,  8.0,  2, 4],
+  "Tennessee":      [35.8,  -86.4,  2.0,  8.5,  2, 4],
+  "Texas":          [31.5,  -99.5,  9.0, 11.0,  5, 5],
+  "Utah":           [39.5, -111.5,  6.0,  5.5,  4, 3],
+  "Vermont":        [44.0,  -72.7,  3.0,  1.5,  3, 2],
+  "Virginia":       [37.5,  -79.4,  3.0,  7.0,  2, 4],
+  "Washington":     [47.4, -120.4,  4.5,  7.5,  3, 4],
+  "West Virginia":  [38.6,  -80.6,  3.0,  3.5,  3, 3],
+  "Wisconsin":      [44.5,  -90.0,  5.0,  4.5,  3, 3],
+  "Wyoming":        [43.0, -107.5,  4.5,  9.0,  3, 4]
+};
+
+function buildGrid(state) {
+  const g = STATE_GRIDS[state];
+  if (!g) return [];
+  const [cLat, cLng, latSpan, lngSpan, rows, cols] = g;
+  const points = [];
+  for (let r = 0; r < rows; r++) {
+    for (let c = 0; c < cols; c++) {
+      const lat = (cLat - latSpan/2) + (latSpan / (rows - 1 || 1)) * r;
+      const lng = (cLng - lngSpan/2) + (lngSpan / (cols - 1 || 1)) * c;
+      points.push({ lat: +lat.toFixed(4), lng: +lng.toFixed(4) });
+    }
+  }
+  return points;
+}
+
+let leads = [];
+let cancelled = false;
+
+async function startStateScan() {
+  const state = document.getElementById('stateSelect').value;
+  if (!state) { showError('Please select a state.'); return; }
+
+  cancelled = false;
+  leads = [];
+  hideAll();
+
+  const grid = buildGrid(state);
+  if (!grid.length) { showError('No grid data for this state.'); return; }
+
+  document.getElementById('progressWrap').style.display = 'block';
+  document.getElementById('searchBtn').disabled = true;
+  document.getElementById('progressLabel').textContent = `Scanning ${state} — ${grid.length} grid points`;
+
+  const seen = new Set();
+  let completed = 0;
+
+  for (const point of grid) {
+    if (cancelled) break;
+
+    updateProgress(completed, grid.length, seen.size, `Searching near ${point.lat}, ${point.lng}...`);
+
     try {
-      for (const type of activeTypes) {
-        const query = `${type} ${location}`;
-        const resp = await fetch(`/api/search?query=${encodeURIComponent(query)}`);
-        if (!resp.ok) throw new Error(`Server error: ${resp.status}`);
-        const data = await resp.json();
-        if (data.status === 'REQUEST_DENIED') throw new Error('API key issue: ' + (data.error_message || 'Check Google Cloud Console'));
-        if (data.error) throw new Error(data.error);
-        for (const place of (data.results || [])) {
-          if (seen.has(place.place_id)) continue;
-          seen.add(place.place_id);
+      // Text search with location bias using coordinates
+      const query = `irrigation company near ${point.lat},${point.lng}`;
+      const resp = await fetch(`/api/search?query=${encodeURIComponent(query)}&lat=${point.lat}&lng=${point.lng}&radius=50000`);
+      if (!resp.ok) throw new Error(`Server error: ${resp.status}`);
+      const data = await resp.json();
+      if (data.status === 'REQUEST_DENIED') throw new Error('API key issue: ' + (data.error_message || ''));
+
+      const places = data.results || [];
+      document.getElementById('progressLive').textContent = `↳ Found ${places.length} raw results at this point, ${seen.size} unique total`;
+
+      for (const place of places) {
+        if (cancelled) break;
+        if (seen.has(place.place_id)) continue;
+        seen.add(place.place_id);
+
+        // Fetch details
+        try {
           const detResp = await fetch(`/api/details?place_id=${place.place_id}`);
           const detData = await detResp.json();
           const d = detData.result || {};
           const website = d.website || '';
-          allResults.push({
-            id: place.place_id, companyName: place.name || '', type: type,
-            phone: d.formatted_phone_number || '', website: website,
+          leads.push({
+            id: place.place_id,
+            companyName: place.name || '',
+            phone: d.formatted_phone_number || '',
+            website: website,
             contactForm: website ? website.replace(/\/$/, '') + '/contact' : '',
             address: d.formatted_address || place.formatted_address || '',
-            locationNotes: location, email: '', facebook: '', firstName: '', lastName: '', notes: ''
+            email: '', facebook: '', firstName: '', lastName: '', notes: ''
           });
-        }
+          document.getElementById('progressCount').textContent = `${leads.length} leads found`;
+        } catch(e) { /* skip detail errors */ }
       }
-      leads = allResults;
-      renderResults();
     } catch(e) {
-      showError(e.message || 'Something went wrong.');
-    } finally {
-      document.getElementById('loadingBox').style.display = 'none';
-      document.getElementById('searchBtn').disabled = false;
+      // Don't abort on single point failure, just note it
+      document.getElementById('progressLive').textContent = `⚠ Error at point ${completed+1}: ${e.message}`;
     }
+
+    completed++;
+    updateProgress(completed, grid.length, leads.length, completed < grid.length ? `Grid point ${completed}/${grid.length} complete` : 'Finalizing...');
+
+    // Small delay to avoid hammering the API
+    await sleep(300);
   }
-  function renderResults() {
-    hideAll();
-    if (leads.length === 0) { document.getElementById('emptyState').style.display = 'block'; return; }
-    document.getElementById('resultCount').textContent = leads.length;
-    document.getElementById('resultsSection').style.display = 'block';
-    const tbody = document.getElementById('resultsBody');
-    tbody.innerHTML = '';
-    leads.forEach((lead, i) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
-        <td style="font-weight:600;min-width:160px">${esc(lead.companyName)}</td>
-        <td><span class="tag-type">${typeLabel(lead.type)}</span></td>
-        <td><input class="inline-input" placeholder="First" value="${esc(lead.firstName)}" oninput="leads[${i}].firstName=this.value"/></td>
-        <td><input class="inline-input" placeholder="Last" value="${esc(lead.lastName)}" oninput="leads[${i}].lastName=this.value"/></td>
-        <td class="mono">${esc(lead.phone)||'<span style="color:var(--ink4)">—</span>'}</td>
-        <td><input class="inline-input" placeholder="email@..." style="min-width:140px" value="${esc(lead.email)}" oninput="leads[${i}].email=this.value"/></td>
-        <td>${lead.website?`<a href="${esc(lead.website)}" target="_blank">🔗 ${esc(hostname(lead.website))}</a>`:'<span style="color:var(--ink4)">—</span>'}</td>
-        <td><input class="inline-input" placeholder="/contact URL" style="min-width:150px" value="${esc(lead.contactForm)}" oninput="leads[${i}].contactForm=this.value"/></td>
-        <td><input class="inline-input" placeholder="facebook.com/..." style="min-width:140px" value="${esc(lead.facebook)}" oninput="leads[${i}].facebook=this.value"/></td>
-        <td class="mono" style="font-size:11px;color:var(--ink3);min-width:140px">${esc(lead.address)}</td>
-        <td><textarea class="notes-input" placeholder="Add notes..." oninput="leads[${i}].notes=this.value" rows="2">${esc(lead.notes)}</textarea></td>
-      `;
-      tbody.appendChild(tr);
-    });
+
+  document.getElementById('progressWrap').style.display = 'none';
+  document.getElementById('searchBtn').disabled = false;
+
+  if (cancelled) {
+    document.getElementById('progressWrap').style.display = 'none';
+    if (leads.length > 0) {
+      renderResults(state);
+    } else {
+      showInitial();
+    }
+    return;
   }
-  function exportCSV() {
-    const headers = ['Company Name','First Name','Last Name','Phone','Email','Website','Contact Form','Facebook','Address','Location Notes','Type','Outreach Notes'];
-    const rows = leads.map(l => [l.companyName,l.firstName,l.lastName,l.phone,l.email,l.website,l.contactForm,l.facebook,l.address,l.locationNotes,l.type,l.notes].map(v => `"${(v||'').replace(/"/g,'""')}"`));
-    const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-    const blob = new Blob([csv], {type:'text/csv'});
-    const a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
-    a.download = `irrigation-leads-${Date.now()}.csv`;
-    a.click();
-  }
-  function showError(msg) { hideAll(); const b = document.getElementById('errorBox'); b.textContent = '⚠ ' + msg; b.style.display = 'block'; }
-  function hideAll() { ['errorBox','loadingBox','resultsSection','emptyState','initialState'].forEach(id => document.getElementById(id).style.display = 'none'); }
-  function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
-  function hostname(url) { try { return new URL(url).hostname.replace('www.',''); } catch(e) { return url; } }
-  function typeLabel(q) { return {'irrigation company':'Irrigation','landscaping company':'Landscape','hardscape contractor':'Hardscape','lawn care service':'Lawn Care'}[q]||q; }
+
+  renderResults(state);
+}
+
+function updateProgress(done, total, leadCount, status) {
+  const pct = total > 0 ? Math.round((done / total) * 100) : 0;
+  document.getElementById('progressFill').style.width = pct + '%';
+  document.getElementById('progressStatus').textContent = `${pct}% — ${status}`;
+  document.getElementById('progressCount').textContent = `${leadCount} leads found`;
+}
+
+function cancelScan() {
+  cancelled = true;
+  document.getElementById('progressStatus').textContent = 'Cancelling...';
+  document.getElementById('cancelBtn').disabled = true;
+}
+
+function renderResults(state) {
+  hideAll();
+  if (leads.length === 0) { document.getElementById('emptyState').style.display = 'block'; return; }
+  document.getElementById('resultCount').textContent = leads.length;
+  document.getElementById('resultState').textContent = state || '';
+  document.getElementById('resultsSection').style.display = 'block';
+  const tbody = document.getElementById('resultsBody');
+  tbody.innerHTML = '';
+  leads.forEach((lead, i) => {
+    const tr = document.createElement('tr');
+    tr.innerHTML = `
+      <td style="font-weight:600;min-width:160px">${esc(lead.companyName)}</td>
+      <td><input class="inline-input" placeholder="First" value="${esc(lead.firstName)}" oninput="leads[${i}].firstName=this.value"/></td>
+      <td><input class="inline-input" placeholder="Last" value="${esc(lead.lastName)}" oninput="leads[${i}].lastName=this.value"/></td>
+      <td class="mono">${esc(lead.phone)||'<span style="color:var(--ink4)">—</span>'}</td>
+      <td><input class="inline-input" placeholder="email@..." style="min-width:140px" value="${esc(lead.email)}" oninput="leads[${i}].email=this.value"/></td>
+      <td>${lead.website?`<a href="${esc(lead.website)}" target="_blank">🔗 ${esc(hostname(lead.website))}</a>`:'<span style="color:var(--ink4)">—</span>'}</td>
+      <td><input class="inline-input" placeholder="/contact URL" style="min-width:150px" value="${esc(lead.contactForm)}" oninput="leads[${i}].contactForm=this.value"/></td>
+      <td><input class="inline-input" placeholder="facebook.com/..." style="min-width:140px" value="${esc(lead.facebook)}" oninput="leads[${i}].facebook=this.value"/></td>
+      <td class="mono" style="font-size:11px;color:var(--ink3);min-width:160px">${esc(lead.address)}</td>
+      <td><textarea class="notes-input" placeholder="Add notes..." oninput="leads[${i}].notes=this.value" rows="2">${esc(lead.notes)}</textarea></td>
+    `;
+    tbody.appendChild(tr);
+  });
+}
+
+function exportCSV() {
+  const headers = ['Company Name','First Name','Last Name','Phone','Email','Website','Contact Form','Facebook','Address','Outreach Notes'];
+  const rows = leads.map(l => [l.companyName,l.firstName,l.lastName,l.phone,l.email,l.website,l.contactForm,l.facebook,l.address,l.notes].map(v => `"${(v||'').replace(/"/g,'""')}"`));
+  const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+  const blob = new Blob([csv], {type:'text/csv'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  const state = document.getElementById('stateSelect').value.replace(/\s+/g,'-').toLowerCase();
+  a.download = `irrigation-leads-${state}-${Date.now()}.csv`;
+  a.click();
+}
+
+function showError(msg) { hideAll(); const b = document.getElementById('errorBox'); b.textContent = '⚠ ' + msg; b.style.display = 'block'; }
+function showInitial() { hideAll(); document.getElementById('initialState').style.display = 'block'; }
+function hideAll() { ['errorBox','progressWrap','resultsSection','emptyState','initialState'].forEach(id => document.getElementById(id).style.display = 'none'); }
+function esc(s) { return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function hostname(url) { try { return new URL(url).hostname.replace('www.',''); } catch(e) { return url; } }
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 </script>
 </body>
 </html>
